@@ -30,6 +30,8 @@
                 <h5>Message Here!</h5>
                 </div>
                 <span>Hello, Mr. Koswara!</span>
+                <br>
+                <a href="login.php" class="btn btn-warning">👋 Keluar!</a>
             </div>
             </div>
         </div>

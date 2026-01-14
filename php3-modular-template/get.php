@@ -76,10 +76,11 @@
             <?php
                 if (isset($_GET['kirim'])) {
                     if ($nama != null && $tanggal != null && $bulan != null && $tahun != null) {
+                        $ttl = $tanggal . "-" . $bulan . "-" . $tahun;
                         ?>
                             <ul>
                                 <li>Nama : <?= $nama ?></li>
-                                <li>Tanggal - Bulan - Tahun : <?= $tanggal ?> - <?= $bulan ?> - <?= $tahun ?></li>
+                                <li>Tanggal - Bulan - Tahun : <?= $ttl ?></li>
                             </ul>
                         <?php
                     } else {
