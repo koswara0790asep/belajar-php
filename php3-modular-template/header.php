@@ -1,3 +1,7 @@
+<?php
+  include "config/db.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -288,14 +292,21 @@
           <i class="bi bi-table"></i>
           <span>Example GET Method</span>
         </a>
-      </li><!-- End Data Produk Nav --> 
+      </li><!-- End Example GET Method --> 
       
       <li class="nav-item">
         <a class="nav-link <?= basename($_SERVER['REQUEST_URI'], ".php") == "post" ? "" : "collapsed" ?>" href="post.php">
           <i class="bi bi-table"></i>
           <span>Example POST Method</span>
         </a>
-      </li><!-- End Data Produk Nav --> 
+      </li><!-- End Example POST Method --> 
+      
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['REQUEST_URI'], ".php") == "supplies-index" ? "" : "collapsed" ?>" href="supplies-index.php">
+          <i class="bi bi-table"></i>
+          <span>Data Barang</span>
+        </a>
+      </li><!-- End Data Barang --> 
 
     </ul>
 
