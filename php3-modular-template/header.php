@@ -307,6 +307,13 @@
           <span>Data Barang</span>
         </a>
       </li><!-- End Data Barang --> 
+      
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['REQUEST_URI'], ".php") == "book-index" ? "" : "collapsed" ?>" href="book-index.php">
+          <i class="bi bi-table"></i>
+          <span>Data Buku</span>
+        </a>
+      </li><!-- End Data Barang --> 
 
     </ul>
 
