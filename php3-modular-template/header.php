@@ -315,6 +315,13 @@
         </a>
       </li><!-- End Data Barang --> 
 
+      <li class="nav-item">
+        <a class="nav-link <?= basename($_SERVER['REQUEST_URI'], ".php") == "user-index" ? "" : "collapsed" ?>" href="user-index.php">
+          <i class="bi bi-table"></i>
+          <span>Data User</span>
+        </a>
+      </li><!-- End Data Barang --> 
+
     </ul>
 
   </aside><!-- End Sidebar-->
