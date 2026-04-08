@@ -31,8 +31,12 @@
           </p>
           <h4>Apakah Anda Yakin?</h4>
           <p>Data akan tetap tersimpan dan anda dapat Login kembali.</p>
-          <a href="login.php" class="btn btn-warning">👋 Ya, Keluar!</a>
-          <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">❌ Tutup</a>
+          <form action="" method="post">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">❌ Tutup</button>
+              <button type="submit" name="logout" id="logout" value="logout" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i> 👋 Ya, Keluar!</button>
+          </form>
+          <!-- <a href="login.php" class="btn btn-warning">👋 Ya, Keluar!</a>
+          <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">❌ Tutup</a> -->
         </div>
       </div>
     </div>

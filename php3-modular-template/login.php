@@ -1,3 +1,7 @@
+<?php
+  include "config/db.php"; 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,70 +65,97 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <p class="text-center small">Enter your Email & password to login</p>
                   </div>
+                  <?php
+                    // ================== PROSES LOGIN ==================
+                    session_start();
 
-                    <?php
-                        if (isset($_POST['login'])) {
-                            $username = $_POST['username'];
-                            $password = $_POST['password'];
-                    ?>
-                <div class="pt-4 pb-2">
-                    <?php 
+                    $_SESSION['user'] = $_SESSION['user'] ?? NULL;
+                    $_SESSION['saved'] = $_SESSION['saved'] ?? false;
                     
-                        if ($username == "admin" && $password == "admin#1234") {
-                        
-                        ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="spinner-border text-success" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                    if ($_SESSION['user'] != NULL) {
+                        header("Location: dashboard.php");
+                    } else {
+                      session_unset();
+
+                      $_SESSION['user'] = NULL;
+
+                      if (isset($_POST['login'])) {
+
+                        $email = $_POST['email']; // pakai email
+                        $password = $_POST['password'];
+
+                        // ambil user dari database
+                        $query = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
+                        $user = mysqli_fetch_assoc($query);
+
+                        if ($user) {
+
+                          // cek password hash
+                          if (password_verify($password, $user['password'])) {
+
+                                session_start();
+                                $_SESSION['user'] = $user;
+
+                                header("Location: dashboard.php");
+
+                      ?>
+
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <strong class="text text-success">Login Sukses!!</strong> *Jika tidak berpindah halaman, <a href="dashboard.php" class="text text-success"><u>klik disini!</u></a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             </div>
-                            <div class="col-md-10">
-                                <strong class="text text-success">Login Sukses!!</strong> *Jika tidak berpindah halaman, <a href="dashboard.php" class="text text-success"><u>klik disini!</u></a>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                            
                         </div>
                         
-                    </div>
-                    
-                    <script>
-                      // cara pertama
-                        setTimeout(function() {
-                            window.location.href = 'dashboard.php';
-                        }, 2000);
-                    </script>
-                            <?php
-                            // cara kedua
-                            // header("Location: dashboard.php"); //* Gunakan Salah Satu
-                            // untuk redirect ke dashboard
-                            } else {
-                        ?>
+                        <script>
+                          // cara pertama
+                          //  setTimeout(function() {
+                          //      window.location.href = 'dashboard.php';
+                          //  }, 2000);
+                        </script>
 
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="bi bi-exclamation-octagon me-1"></i>
-                        <strong>Login Gagal!!</strong> username atau password salah. 
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                      <?php
+                          } else {
+                      ?>
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <i class="bi bi-exclamation-octagon me-1"></i>
+                          <strong>Login Gagal!!</strong> password salah. 
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                      <?php
+                          }
 
-                            <?php
-                            }
-                        ?>
-                </div>
-                <?php
+                        } else {
+                      ?>
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <i class="bi bi-exclamation-octagon me-1"></i>
+                          <strong>Login Gagal!!</strong> Email tidak ditemukan. 
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                      <?php
+                        }
+                      }
                     }
-                ?>
+                    ?>
 
                   <form class="row g-3 needs-validation" method="POST" novalidate>
 
                     <div class="col-12">
-                      <label for="username" class="form-label">Username</label>
+                      <label for="email" class="form-label">email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="username" required>
-                        <div class="invalid-feedback">Please enter your username!</div>
+                        <input type="text" name="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">Please enter your email!</div>
                       </div>
                     </div>
 

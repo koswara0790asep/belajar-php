@@ -1,5 +1,21 @@
 <?php
   include "config/db.php";
+
+  session_start();
+  if(!isset($_SESSION["user"])) {
+      header("Location: login.php");
+  }
+
+  if (isset($_POST['logout'])) {
+      session_unset();
+      header("Location: login.php");
+  }
+
+  $id = $_SESSION['user']['id']; // pastikan session id_user sudah dibuat 
+  $query = mysqli_query($conn, "SELECT users.id as user_id, users.name, users.email, roles.id as role_id, roles.role_name, roles.color_pill FROM users JOIN roles ON users.role_id = roles.id WHERE users.id = $id");
+  // $query = mysqli_query($conn, "SELECT * FROM users WHERE id = $id");
+  $user = mysqli_fetch_assoc($query);
+  
 ?>
 
 <!DOCTYPE html>
@@ -216,13 +232,13 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $user['name']; ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6><?php echo $user['name']; ?></h6>
+              <span><?php echo $user['role_name']; ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
